@@ -1,7 +1,7 @@
 let mainBtn = document.querySelector('.main-btn');
 let dataContainer = document.querySelector('.data-container');
 let getIP = 'https://api.ipify.org/?format=json'
-let getData = 'http://ip-api.com/json/'
+let getData = 'https://ipapi.co/'
 class Card {
     constructor(query,country,region,city,timezone,mobile) {
         this.country = country
@@ -36,21 +36,18 @@ let mobileLine = document.createElement('h3');
    </h3>
    <h3 class="timezone-line">
    Your Timezone: ${this.timezone}
-   </h3>
-   ${mobileLine.innerHTML}
-   <h3 class="answer-line">
-   Обычный скрипт в JS срабатывает строчка за строчкой, когда мы начинаем работать с асинхронностью то эта концепция меняеться и формируется определленая "очередь" задач
    </h3>`)
 document.body.append(dataContainer);
-mainBtn.remove()
+
 }
 }
 mainBtn.addEventListener('click', async function() {
+    mainBtn.remove()
 let response = await fetch(getIP)
 let ip = await response.json()
-let dataObj = await fetch(`${getData}${ip.ip}?fields=country,regionName,city,timezone,mobile,query`)
+let dataObj = await fetch(`${getData}${ip.ip}/json/`)
 let data = await dataObj.json()
- data = new Card(data.query,data.country,data.regionName,data.city,data.timezone,data.mobile)
+ data = new Card(data.ip,data.country,data.region,data.city,data.timezone,)
  data.render()
 })
 
